@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/15 11:09:44 by npremont          #+#    #+#             */
-/*   Updated: 2024/01/22 12:13:05 by npremont         ###   ########.fr       */
+/*   Created: 2024/01/22 11:22:33 by npremont          #+#    #+#             */
+/*   Updated: 2024/01/22 12:11:37 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "stdio.h"
+#include "stdlib.h"
+#include "unistd.h"
+#include "pthread.h"
 
-int	main(int ac, char **av)
+typedef struct s_socrate
 {
-	t_socrate	socrate;
+	unsigned int	nb_philo;
+	unsigned int	time_to_die;
+	unsigned int	time_to_eat;
+	unsigned int	time_to_sleep;
+	unsigned int	eat_num;
+}	t_socrate;
 
-	if (ac < 5 || av > 6)
-		ft_error("Error: argument\n", 1);
-	ft_init(ac, av, &socrate);
-	return (0);
-}
+/* INIT FUNCTIONS*/
+
+
+
+/* UTILS FUNCTIONS */
+
+long int	ft_atol(const char *nptr);
+size_t		ft_strlen(char *str);
+void		ft_error(char *str, int code)

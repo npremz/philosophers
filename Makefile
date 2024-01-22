@@ -43,7 +43,7 @@ display:
 	@echo "^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^V^\n"
 
 usage:
-	@echo "Usage: ./philo <number of philosophers> <time to die> <time to eat> <time to sleep>\n"
+	@echo "Usage: ./philo <number of philosophers> <time to die> <time to eat> <time to sleep> [number_of_times_each_philosopher_must_eat]\n"
 
 re: fclean all
 
