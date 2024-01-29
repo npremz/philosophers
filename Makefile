@@ -2,7 +2,7 @@ NAME = philo
 
 HEADER = ./
 
-SOURCES = main.c
+SOURCES = main.c init.c utils.c
 
 OBJECTS = $(SOURCES:.c=.o)
 

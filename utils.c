@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:21:07 by npremont          #+#    #+#             */
-/*   Updated: 2024/01/22 12:11:18 by npremont         ###   ########.fr       */
+/*   Updated: 2024/01/29 13:45:21 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ size_t	ft_strlen(char *str)
 {
 	size_t	i;
 
+	i = 0;
 	while (str[i])
 		++i;
 	return (i);

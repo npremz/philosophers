@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 12:00:14 by npremont          #+#    #+#             */
-/*   Updated: 2024/01/22 12:12:29 by npremont         ###   ########.fr       */
+/*   Updated: 2024/01/29 13:41:38 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_init(int ac, char **av, t_socrate *socrate)
 		|| (socrate->time_to_sleep < 0 || socrate->time_to_sleep > 2147483647))
 		ft_error("Error: invalid argument.\n", 1);
 	if (ac == 6)
-		socrate->eat_num = ft_atol([5]);
+		socrate->eat_num = ft_atol(av[5]);
 	if (socrate->time_to_sleep < 0 || socrate->time_to_sleep > 2147483647)
 		ft_error("Error: invalid argument.\n", 1);
 }

@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:22:33 by npremont          #+#    #+#             */
-/*   Updated: 2024/01/22 12:11:37 by npremont         ###   ########.fr       */
+/*   Updated: 2024/01/29 13:42:02 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ typedef struct s_socrate
 
 /* INIT FUNCTIONS*/
 
-
+void		ft_init(int ac, char **av, t_socrate *socrate);
 
 /* UTILS FUNCTIONS */
 
 long int	ft_atol(const char *nptr);
 size_t		ft_strlen(char *str);
-void		ft_error(char *str, int code)
+void		ft_error(char *str, int code);
