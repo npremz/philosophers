@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:21:07 by npremont          #+#    #+#             */
-/*   Updated: 2024/01/29 13:45:21 by npremont         ###   ########.fr       */
+/*   Updated: 2024/01/31 17:01:17 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ size_t	ft_strlen(char *str)
 	return (i);
 }
 
-void	ft_error(char *str, int code)
+void	*error(char *str)
 {
 	write(2, str, ft_strlen(str));
-	exit(code);
+	return (0);
 }

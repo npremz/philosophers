@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/15 11:09:44 by npremont          #+#    #+#             */
-/*   Updated: 2024/01/31 17:07:04 by npremont         ###   ########.fr       */
+/*   Created: 2024/01/31 17:01:10 by npremont          #+#    #+#             */
+/*   Updated: 2024/01/31 17:05:12 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int ac, char **av)
+void	ft_free(void **ptr)
 {
-	t_table	table;
+	free(*ptr);
+	*ptr = NULL;
+}
 
-	if (5 == ac || 6 == ac)
+void	ft_destroy_mtx(t_table *table)
+{
+	int	i;
+
+	i = -1;
+	while (++i < table->mtx_inited)
 	{
-		if (!ft_parse_input(&table, av))
-			return (EXIT_FAILURE);
-		if (!data_init(&table))
-			return (error("Error: data init failed.\n"), EXIT_FAILURE);
+		ft_mutex_handle(&table->forks[i].fork, DESTROY);
 	}
-	else
-		return (error("Wrong input! Correct: ./philo 5 800 200 200 [5]\n"), 1);
 }
