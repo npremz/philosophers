@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:22:13 by npremont          #+#    #+#             */
-/*   Updated: 2024/01/31 17:37:35 by npremont         ###   ########.fr       */
+/*   Updated: 2024/02/20 12:06:08 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ bool	data_init(t_table *table)
 	int	i;
 
 	table->end_simulation = false;
+	table->all_threads_ready = false;
 	table->mtx_inited = 0;
+	if (ft_mutex_handle(&table->table_mutex, INIT))
+		return (false);
 	table->philos = malloc(sizeof(t_philo) * table->philo_nbr);
 	if (!(table->philos))
 		return (false);

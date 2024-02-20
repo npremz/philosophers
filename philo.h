@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:22:33 by npremont          #+#    #+#             */
-/*   Updated: 2024/01/31 17:23:50 by npremont         ###   ########.fr       */
+/*   Updated: 2024/02/20 14:18:57 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ typedef struct s_table
 	long	nbr_limit_meals;
 	long	start_simulation;
 	bool	end_simulation;
+	bool	all_threads_ready;
+	t_mtx	table_mutex;
 	t_fork	*forks;
 	t_philo	*philos;
 	long	mtx_inited;
@@ -93,6 +95,14 @@ bool		data_init(t_table *table);
 bool		ft_thread_handle(pthread_t *thread, void *(*f)(void *),
 				void *data, t_opcode opcode);
 bool		ft_mutex_handle(t_mtx *mutex, t_opcode opcode);
+
+/* SETTER AND GETTERS */
+
+int			set_bool(t_mtx *mutex, bool *dest, bool value);
+bool		get_bool(t_mtx *mutex, bool *value);
+int			set_long(t_mtx *mutex, long *dest, long value);
+long		get_long(t_mtx *mutex, long *value);
+bool		simulation_finished(t_table *table);
 
 /* UTILS FUNCTIONS */
 
