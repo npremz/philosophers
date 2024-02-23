@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 14:15:53 by npremont          #+#    #+#             */
-/*   Updated: 2024/01/31 17:40:29 by npremont         ###   ########.fr       */
+/*   Updated: 2024/02/21 13:41:35 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,19 @@ static bool	ft_hdl_trd_err(int status, t_opcode opcode)
 	if (0 == status)
 		return (false);
 	if (EAGAIN == status)
-		return (error("No resources to create another thread"), true);
+		return (error("No resources to create another thread\n"), true);
 	else if (EPERM == status)
 		return (error("The caller don't have appropriate permission\n"), true);
 	else if (EINVAL == status && CREATE == opcode)
-		return (error("The value specified by attr is invalid."), true);
+		return (error("The value specified by attr is invalid.\n"), true);
 	else if (EINVAL == status && (JOIN == opcode || DETACH == opcode))
 		return (error("The value specified by thread is not joinable\n"), true);
 	else if (ESRCH == status)
 		return (error("No thread could be found corresponding to that"
-				"specified by the given thread ID, thread."), true);
+				"specified by the given thread ID, thread.\n"), true);
 	else if (EDEADLK == status)
 		return (error("A deadlock was detected or the value of"
-				"thread specifies the calling thread."), true);
+				"thread specifies the calling thread.\n"), true);
 	return (true);
 }
 
@@ -66,7 +66,7 @@ bool	ft_mutex_handle(t_mtx *mutex, t_opcode opcode)
 	else if (DESTROY == opcode)
 		return (ft_handle_mtx_err(pthread_mutex_destroy(mutex), opcode));
 	else
-		return (error("Wrong opcode for ft_mutex_handle"), true);
+		return (error("Wrong opcode for ft_mutex_handle\n"), true);
 }
 
 bool	ft_thread_handle(pthread_t *thread, void *(*f)(void *),
@@ -79,5 +79,5 @@ bool	ft_thread_handle(pthread_t *thread, void *(*f)(void *),
 	else if (DETACH == opcode)
 		return (ft_hdl_trd_err(pthread_detach(*thread), opcode));
 	else
-		return (error("Wrong opcode for ft_thread_handle"), true);
+		return (error("Wrong opcode for ft_thread_handle\n"), true);
 }

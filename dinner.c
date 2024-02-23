@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:43:28 by npremont          #+#    #+#             */
-/*   Updated: 2024/02/20 14:20:49 by npremont         ###   ########.fr       */
+/*   Updated: 2024/02/22 00:10:02 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*dinner_simulation(void *data)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)data;
 	wait_all_threads(philo->table);
@@ -34,6 +34,6 @@ int	dinner_start(t_table *table)
 		while (++i < table->philo_nbr)
 			ft_thread_handle(&table->philos[i].thread_id, dinner_simulation,
 				&table->philos[i], CREATE);
-	if (set_bool(&table->table_mutex, &table->all_threads_ready, true))
-		return (EXIT_FAILURE);
+	table->start_simulation = gettime(MILLISECOND);
+	set_bool(&table->table_mutex, &table->all_threads_ready, true);
 }

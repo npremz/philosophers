@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:22:33 by npremont          #+#    #+#             */
-/*   Updated: 2024/02/20 14:18:57 by npremont         ###   ########.fr       */
+/*   Updated: 2024/02/21 13:47:24 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,13 @@ typedef enum e_opcode
 	DETACH,
 }	t_opcode;
 
+typedef enum e_time_code
+{
+	SECOND,
+	MILLISECOND,
+	MICROSECOND
+}	t_time_code;
+
 /* PARSING FUNCTION
 ** -> Returns false if failed
 */
@@ -96,11 +103,15 @@ bool		ft_thread_handle(pthread_t *thread, void *(*f)(void *),
 				void *data, t_opcode opcode);
 bool		ft_mutex_handle(t_mtx *mutex, t_opcode opcode);
 
+/* SYNC UTILS */
+
+void		wait_all_threads(t_table *table);
+
 /* SETTER AND GETTERS */
 
-int			set_bool(t_mtx *mutex, bool *dest, bool value);
+void		set_bool(t_mtx *mutex, bool *dest, bool value);
 bool		get_bool(t_mtx *mutex, bool *value);
-int			set_long(t_mtx *mutex, long *dest, long value);
+void		set_long(t_mtx *mutex, long *dest, long value);
 long		get_long(t_mtx *mutex, long *value);
 bool		simulation_finished(t_table *table);
 
@@ -108,6 +119,7 @@ bool		simulation_finished(t_table *table);
 
 size_t		ft_strlen(char *str);
 void		*error(char *str);
+long		gettime(t_time_code time_code);
 
 /* FREE UTILS FUNCTIONS */
 
