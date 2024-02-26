@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:22:33 by npremont          #+#    #+#             */
-/*   Updated: 2024/02/21 13:47:24 by npremont         ###   ########.fr       */
+/*   Updated: 2024/02/26 18:39:52 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <limits.h>
 # include <sys/time.h>
 # include <errno.h>
+
+# define DEBUG_MODE 0
 
 /* SHORTCUT */
 
@@ -44,6 +46,7 @@ typedef struct s_philo
 	t_fork		*first_fork;
 	t_fork		*second_fork;
 	pthread_t	thread_id;
+	t_mtx		philo_mutex;
 	t_table		*table;
 }	t_philo;
 
@@ -58,12 +61,23 @@ typedef struct s_table
 	bool	end_simulation;
 	bool	all_threads_ready;
 	t_mtx	table_mutex;
+	t_mtx	write_mutex;
 	t_fork	*forks;
 	t_philo	*philos;
 	long	mtx_inited;
 }	t_table;
 
 /* ENUMS */
+
+typedef enum e_status
+{
+	EATING,
+	SLEEPING,
+	THINKING,
+	TAKE_FIRST_FORK,
+	TAKE_SECOND_FORK,
+	DIED,
+}	t_philo_status;
 
 typedef enum e_opcode
 {
@@ -95,13 +109,17 @@ bool		ft_parse_input(t_table *table, char **av);
 
 bool		data_init(t_table *table);
 
-/* THREADS FONCTION (including error gestion) 
+/* THREADS FONCTIONS (including error gestion) 
 ** -> Returns true if an error occured
 */
 
 bool		ft_thread_handle(pthread_t *thread, void *(*f)(void *),
 				void *data, t_opcode opcode);
 bool		ft_mutex_handle(t_mtx *mutex, t_opcode opcode);
+
+/* WRITING FUNCTIONS */
+
+void		write_status(t_philo_status status, t_philo *philo, bool debug);
 
 /* SYNC UTILS */
 
@@ -120,6 +138,7 @@ bool		simulation_finished(t_table *table);
 size_t		ft_strlen(char *str);
 void		*error(char *str);
 long		gettime(t_time_code time_code);
+void		precise_usleep(long usec, t_table *table);
 
 /* FREE UTILS FUNCTIONS */
 

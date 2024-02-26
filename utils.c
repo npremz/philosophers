@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:21:07 by npremont          #+#    #+#             */
-/*   Updated: 2024/02/21 13:46:12 by npremont         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:19:34 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,27 @@ long	gettime(t_time_code time_code)
 		return ((tv.tv_sec * 1e6) + tv.tv_usec);
 	else
 		return (error("Wrong time code\n"), -1);
+}
+
+void	precise_usleep(long usec, t_table *table)
+{
+	long	start;
+	long	elapsed;
+	long	rem;
+
+	start = gettime(MICROSECOND);
+	while (gettime(MICROSECOND) - start < usec)
+	{
+		if (simulation_finished(table))
+			break ;
+		elapsed = gettime(MICROSECOND) - start;
+		rem = usec - elapsed;
+		if (rem > 1e3)
+			usleep(usec / 2);
+		else
+		{
+			while (gettime(MICROSECOND) - start < usec)
+				;
+		}
+	}
 }
