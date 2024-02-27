@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:22:13 by npremont          #+#    #+#             */
-/*   Updated: 2024/02/26 18:41:53 by npremont         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:35:03 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static bool	ft_philo_init(t_table *table)
 	while (++i < table->philo_nbr)
 	{
 		philo = table->philos + i;
-		philo->id = i;
+		philo->id = i + 1;
 		philo->full = false;
 		philo->meals_counter = 0;
 		philo->table = table;
@@ -51,8 +51,10 @@ bool	data_init(t_table *table)
 
 	table->end_simulation = false;
 	table->all_threads_ready = false;
-	table->mtx_inited = 0;
+	table->threads_running_nbr = 0;
 	if (ft_mutex_handle(&table->table_mutex, INIT))
+		return (false);
+	if (ft_mutex_handle(&table->write_mutex, INIT))
 		return (false);
 	table->philos = malloc(sizeof(t_philo) * table->philo_nbr);
 	if (!(table->philos))
@@ -63,10 +65,7 @@ bool	data_init(t_table *table)
 	i = -1;
 	while (++i < table->philo_nbr)
 	{
-		if (ft_mutex_handle(&table->forks[i].fork, INIT))
-			return (ft_destroy_mtx(table), ft_free((void **)&table->philos),
-				ft_free((void **)&table->forks), false);
-		++(table->mtx_inited);
+		ft_mutex_handle(&table->forks[i].fork, INIT);
 		table->forks[i].fork_id = i;
 	}
 	if (!ft_philo_init(table))

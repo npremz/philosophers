@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 12:06:55 by npremont          #+#    #+#             */
-/*   Updated: 2024/02/21 12:53:54 by npremont         ###   ########.fr       */
+/*   Updated: 2024/02/27 10:36:20 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	set_bool(t_mtx *mutex, bool *dest, bool value)
 	ft_mutex_handle(mutex, LOCK);
 	*dest = value;
 	ft_mutex_handle(mutex, UNLOCK);
-	return (0);
 }
 
 bool	get_bool(t_mtx *mutex, bool *value)

@@ -2,7 +2,8 @@ NAME = philo
 
 HEADER = ./
 
-SOURCES = main.c utils.c parsing.c init.c free_utils.c thread_functions.c
+SOURCES = main.c utils.c parsing.c init.c free_utils.c thread_functions.c dinner.c \
+			getters_setters.c sync_utils.c write.c monitor.c
 
 OBJECTS = $(SOURCES:.c=.o)
 

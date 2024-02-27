@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:22:33 by npremont          #+#    #+#             */
-/*   Updated: 2024/02/26 18:39:52 by npremont         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:01:12 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <sys/time.h>
 # include <errno.h>
 
-# define DEBUG_MODE 0
+# define DEBUG_MODE 1
 
 /* SHORTCUT */
 
@@ -52,19 +52,21 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	long	philo_nbr;
-	long	time_to_die;
-	long	time_to_eat;
-	long	time_to_sleep;
-	long	nbr_limit_meals;
-	long	start_simulation;
-	bool	end_simulation;
-	bool	all_threads_ready;
-	t_mtx	table_mutex;
-	t_mtx	write_mutex;
-	t_fork	*forks;
-	t_philo	*philos;
-	long	mtx_inited;
+	long		philo_nbr;
+	long		time_to_die;
+	long		time_to_eat;
+	long		time_to_sleep;
+	long		nbr_limit_meals;
+	long		start_simulation;
+	bool		end_simulation;
+	bool		all_threads_ready;
+	long		threads_running_nbr;
+	pthread_t	monitor;
+	t_mtx		table_mutex;
+	t_mtx		write_mutex;
+	t_fork		*forks;
+	t_philo		*philos;
+	long		mtx_inited;
 }	t_table;
 
 /* ENUMS */
@@ -109,6 +111,12 @@ bool		ft_parse_input(t_table *table, char **av);
 
 bool		data_init(t_table *table);
 
+/* START FUNCTION
+** -> Returns 1 if failed
+*/
+
+int			dinner_start(t_table *table);
+
 /* THREADS FONCTIONS (including error gestion) 
 ** -> Returns true if an error occured
 */
@@ -117,6 +125,11 @@ bool		ft_thread_handle(pthread_t *thread, void *(*f)(void *),
 				void *data, t_opcode opcode);
 bool		ft_mutex_handle(t_mtx *mutex, t_opcode opcode);
 
+/* MONITOR ROUTINE */
+
+void		*monitor(void *data);
+
+
 /* WRITING FUNCTIONS */
 
 void		write_status(t_philo_status status, t_philo *philo, bool debug);
@@ -124,6 +137,8 @@ void		write_status(t_philo_status status, t_philo *philo, bool debug);
 /* SYNC UTILS */
 
 void		wait_all_threads(t_table *table);
+void		increase_long(t_mtx *mutex, long *value);
+bool		all_threads_running(t_mtx *mutex, long *threads, long philo_nbr);
 
 /* SETTER AND GETTERS */
 

@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:24:46 by npremont          #+#    #+#             */
-/*   Updated: 2024/02/26 18:30:13 by npremont         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:29:01 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	write_status(t_philo_status status, t_philo *philo, bool debug)
 {
 	long	elapsed;
 
-	elapsed = gettime(MILLISECOND);
+	elapsed = gettime(MILLISECOND) - philo->table->start_simulation;
 	if (philo->full)
 		return ;
 	ft_mutex_handle(&philo->table->write_mutex, LOCK);
@@ -44,7 +44,7 @@ void	write_status(t_philo_status status, t_philo *philo, bool debug)
 		write_status_debug(status, philo, elapsed);
 	else
 	{
-		if (TAKE_FIRST_FORK == status || TAKE_SECOND_FORK == status
+		if ((TAKE_FIRST_FORK == status || TAKE_SECOND_FORK == status)
 			&& !simulation_finished(philo->table))
 			printf("%-6ld %d has taken a fork\n", elapsed, philo->id);
 		else if (EATING == status && !simulation_finished(philo->table))
