@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:22:33 by npremont          #+#    #+#             */
-/*   Updated: 2024/02/27 14:01:12 by npremont         ###   ########.fr       */
+/*   Updated: 2024/02/28 13:28:57 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <sys/time.h>
 # include <errno.h>
 
-# define DEBUG_MODE 1
+# define DEBUG_MODE 0
 
 /* SHORTCUT */
 
@@ -117,6 +117,12 @@ bool		data_init(t_table *table);
 
 int			dinner_start(t_table *table);
 
+/* CLEAN FUNCTION
+** -> cleans everything to avoid leaks
+*/
+
+void		clean(t_table *table);
+
 /* THREADS FONCTIONS (including error gestion) 
 ** -> Returns true if an error occured
 */
@@ -132,6 +138,7 @@ void		*monitor(void *data);
 
 /* WRITING FUNCTIONS */
 
+void		thinking(t_philo *philo, bool pre_simulation);
 void		write_status(t_philo_status status, t_philo *philo, bool debug);
 
 /* SYNC UTILS */
@@ -139,6 +146,7 @@ void		write_status(t_philo_status status, t_philo *philo, bool debug);
 void		wait_all_threads(t_table *table);
 void		increase_long(t_mtx *mutex, long *value);
 bool		all_threads_running(t_mtx *mutex, long *threads, long philo_nbr);
+void		de_sync_philos(t_philo *philo);
 
 /* SETTER AND GETTERS */
 

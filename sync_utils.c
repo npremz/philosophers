@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 14:22:12 by npremont          #+#    #+#             */
-/*   Updated: 2024/02/27 14:03:45 by npremont         ###   ########.fr       */
+/*   Updated: 2024/02/28 13:27:23 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,18 @@ void	increase_long(t_mtx *mutex, long *value)
 	ft_mutex_handle(mutex, LOCK);
 	(*value)++;
 	ft_mutex_handle(mutex, UNLOCK);
+}
+
+void	de_sync_philos(t_philo *philo)
+{
+	if (philo->table->philo_nbr % 2 == 0)
+	{
+		if (philo->id % 2 == 0)
+			precise_usleep(3e4, philo->table);
+	}
+	else
+	{
+		if (philo->id % 2)
+			thinking(philo, true);
+	}
 }
