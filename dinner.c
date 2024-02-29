@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 11:43:28 by npremont          #+#    #+#             */
-/*   Updated: 2024/02/28 13:28:01 by npremont         ###   ########.fr       */
+/*   Updated: 2024/02/29 12:13:32 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	thinking(t_philo *philo, bool pre_simulation)
 	long	t_sleep;
 	long	t_think;
 
-	if (!pre_simulation)
-		write_status(THINKING, philo, DEBUG_MODE);
+	(void)pre_simulation;
+	write_status(THINKING, philo, DEBUG_MODE);
 	if (philo->table->philo_nbr % 2 == 0)
 		return ;
 	t_eat = philo->table->time_to_eat;
@@ -27,8 +27,7 @@ void	thinking(t_philo *philo, bool pre_simulation)
 	t_think = t_eat * 2 - t_sleep;
 	if (t_think < 0)
 		t_think = 0;
-	precise_usleep(t_think * 0.42, philo->table);
-
+	precise_usleep(t_think * 0.19, philo->table);
 }
 
 void	*lone_philo(void *arg)
@@ -107,10 +106,8 @@ int	dinner_start(t_table *table)
 	ft_thread_handle(&table->monitor, monitor, table, CREATE);
 	table->start_simulation = gettime(MILLISECOND);
 	set_bool(&table->table_mutex, &table->all_threads_ready, true);
-	i = -1;
-	while (++i < table->philo_nbr)
-		if (ft_thread_handle(&table->philos[i].thread_id, NULL, NULL, JOIN))
-			return (EXIT_FAILURE);
+	if (join_all_philos(table))
+		return (EXIT_FAILURE);
 	set_bool(&table->table_mutex, &table->end_simulation, true);
 	ft_thread_handle(&table->monitor, NULL, NULL, JOIN);
 	return (EXIT_SUCCESS);

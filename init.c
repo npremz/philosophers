@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 11:22:13 by npremont          #+#    #+#             */
-/*   Updated: 2024/02/28 12:02:55 by npremont         ###   ########.fr       */
+/*   Updated: 2024/02/29 13:19:01 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static bool	ft_philo_init(t_table *table)
 		philo->meals_counter = 0;
 		philo->table = table;
 		if (ft_mutex_handle(&philo->philo_mutex, INIT))
-			return (true);
+			return (false);
 		ft_get_forks(philo, table->forks, i);
 	}
 	return (true);
@@ -66,7 +66,8 @@ bool	data_init(t_table *table)
 	i = -1;
 	while (++i < table->philo_nbr)
 	{
-		ft_mutex_handle(&table->forks[i].fork, INIT);
+		if (ft_mutex_handle(&table->forks[i].fork, INIT))
+			return (false);
 		table->forks[i].fork_id = i;
 	}
 	if (!ft_philo_init(table))

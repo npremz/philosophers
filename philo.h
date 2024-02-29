@@ -6,7 +6,7 @@
 /*   By: npremont <npremont@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 11:22:33 by npremont          #+#    #+#             */
-/*   Updated: 2024/02/28 13:28:57 by npremont         ###   ########.fr       */
+/*   Updated: 2024/02/29 12:02:44 by npremont         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,11 +135,14 @@ bool		ft_mutex_handle(t_mtx *mutex, t_opcode opcode);
 
 void		*monitor(void *data);
 
-
 /* WRITING FUNCTIONS */
 
 void		thinking(t_philo *philo, bool pre_simulation);
 void		write_status(t_philo_status status, t_philo *philo, bool debug);
+
+/* DINNER UTILS */
+
+int			join_all_philos(t_table *table);
 
 /* SYNC UTILS */
 
